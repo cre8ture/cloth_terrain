@@ -338,12 +338,16 @@ for ( y = 0; y <= segments; ++y) {
 
     // as the name suggest
     function tear(mouseX, mouseY, threshold) {
+      console.log("i am TEAR! bear")
         for (let i = 0; i < cloth.points.length; i++) {
           // Calculate the distance between the mouse position and the point
           let dist = cloth.points[i].pos.dist(new Vector(mouseX, mouseY));
       
           // If the distance is less than the threshold, remove the corresponding sticks
+          console.log("i am tear dist",)
           if (dist < threshold) {
+          console.log("i am TEAR!")
+
             let sticksToRemove = cloth.sticks.filter(stick => stick.startPoint === cloth.points[i] || stick.endPoint === cloth.points[i]);
             sticksToRemove.forEach(stick => {
               let index = cloth.sticks.indexOf(stick);
@@ -418,6 +422,7 @@ for ( y = 0; y <= segments; ++y) {
 
     // as the name suggest
     function tear(mouseX, mouseY, threshold) {
+
         for (let i = 0; i < cloth.points.length; i++) {
           // Calculate the distance between the mouse position and the point
           let dist = cloth.points[i].pos.dist(new Vector(mouseX, mouseY));

@@ -98,18 +98,8 @@ window.onload = function () {
     // Add a tear function
     tear(mouseX, mouseY, threshold) {
       this.c.tear(mouseX, mouseY, threshold);
-      //   for (let i = 0; i < this.sticks.length; i++) {
-      //     // Calculate the distance between the mouse position and the midpoint of the stick
-      //     let midPoint = this.sticks[i].startPoint.pos.add(this.sticks[i].endPoint.pos).mult(0.5);
-      //     let dist = Math.sqrt(Math.pow(midPoint.x - mouseX, 2) + Math.pow(midPoint.y - mouseY, 2));
+      console.log("TEARING threshold", threshold)
 
-      //     // If the distance is less than the threshold, remove the stick
-      //     if (dist < threshold) {
-      //       this.removeStick(i);
-      //       i--; // Decrement i because the sticks array has been shortened
-      //     }
-      //   }
-      // }
     }
   }
   // Create a new Cloth instance
@@ -136,40 +126,57 @@ window.onload = function () {
 
   // Track the mouse down event
   canvas.addEventListener("mousedown", function (e) {
-    isMouseDown = true;
+    // isMouseDown = true;
     // You can add your logic here for what should happen when mouse button is pressed
   });
 
     // Add an event listener for the mousemove event
-canvas.addEventListener('mousemove', function(e) {
-  // Calculate the mouse position
-  let rect = canvas.getBoundingClientRect();
-  let mouseX = e.clientX - rect.left;
-  let mouseY = e.clientY - rect.top;
+// canvas.addEventListener('mousemove', function(e) {
+//   // Calculate the mouse position
+//   let rect = canvas.getBoundingClientRect();
+//   let mouseX = e.clientX - rect.left;
+//   let mouseY = e.clientY - rect.top;
 
-  // Find the point in the cloth that is closest to the mouse position
-  let closestPoint = cloth.points.reduce((closest, point) => {
-    let dx = point.x - mouseX;
-    let dy = point.y - mouseY;
-    let distance = Math.sqrt(dx * dx + dy * dy);
-    return distance < closest.distance ? {point, distance} : closest;
-  }, {point: null, distance: Infinity}).point;
+//   // Find the point in the cloth that is closest to the mouse position
+//   let closestPoint = cloth.points.reduce((closest, point) => {
+//     let dx = point.x - mouseX;
+//     let dy = point.y - mouseY;
+//     let distance = Math.sqrt(dx * dx + dy * dy);
+//     return distance < closest.distance ? {point, distance} : closest;
+//   }, {point: null, distance: Infinity}).point;
 
-  // Apply a force to the closest point
-  if (closestPoint) {
-    closestPoint.applyForce(0, -0.1);
-  }
-});
+//   // Apply a force to the closest point
+//   if (closestPoint) {
+//     closestPoint.applyForce(0, -0.1);
+//   }
+// });
 
   // Track the mouse move event
   canvas.addEventListener("mousemove", function (e) {
     if (isMouseDown) {
-      cloth.tear(e.clientX, e.clientY, 20);
+      // cloth.tear(e.clientX, e.clientY, 20);
+      cloth.tear(e.offsetX, e.offsetY, 20);
       // You can add your logic here for what should happen when mouse moves while button is pressed
-      console.log("Mouse move at position: ", e.clientX, e.clientY);
+      // console.log("Mouse move at position: ", e.clientX, e.clientY);
     }
   });
 
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'c' || e.key === 'C') {
+    isMouseDown = true;
+
+      // Add your logic here for what should happen when 'c' or 'C' is pressed
+    }
+  });
+
+  
+  window.addEventListener('keyup', function(e) {
+    if (e.key === 'c' || e.key === 'C') {
+    isMouseDown = false;
+
+      // Add your logic here for what should happen when 'c' or 'C' is pressed
+    }
+  });
 
   // Track the mouse up event
   canvas.addEventListener("mouseup", function (e) {
